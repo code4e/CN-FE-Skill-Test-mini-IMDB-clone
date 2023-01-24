@@ -85,6 +85,7 @@ details[data-popover="down"]>summary+* {
     transform: scale(1.05);
 }
 #popover-list li:hover{
+    cursor: pointer;
     background-color: aquamarine;
 }
 

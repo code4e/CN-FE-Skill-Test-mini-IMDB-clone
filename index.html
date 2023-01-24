@@ -13,48 +13,47 @@
 
 <body>
 
+  <div class="main-container">
+    <form class="row g-3 d-flex align-items-center justify-content-center w-75 mx-auto" id="input-movie-form">
+      <div class="col-11">
+        <input type="text" class="form-control" placeholder="Type here..." id="search-box">
 
-  <form class="row g-3 d-flex align-items-center justify-content-center w-75 mx-auto" id="input-movie-form">
-    <div class="col-11">
-      <input type="text" class="form-control" placeholder="Type here..." id="search-box">
-
-      <div class="wrapper">
-        <details data-popover="down">
-          <summary></summary>
-          <!-- <ul id="popover-list"> -->
-          <!-- <li>The amazing Spider-man</li>
+        <div class="wrapper">
+          <details data-popover="down">
+            <summary></summary>
+            <!-- <ul id="popover-list"> -->
+            <!-- <li>The amazing Spider-man</li>
             <li>Spider-man</li>
             <li>Intersteller</li>
             <li>Batman - Mask of the Phantasm</li> -->
-          <!-- </ul> -->
-        </details>
+            <!-- </ul> -->
+          </details>
+        </div>
+
+
+      </div>
+
+      <div class="col-1">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+
+
+    <div id="favorites-container" class="w-75 d-flex flex-column justify-content-center align-items-center mx-auto">
+
+      <h2>Favorites</h2>
+
+
+
+      <div class="row row-cols-1 row-cols-lg-3 g-4 row-cols-md-2 justify-content-md-center" id="favorites-movie-container">
+
+
       </div>
 
 
     </div>
 
-    <div class="col-1">
-      <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-  </form>
-
-
-  <div id="favorites-container" class="w-75 d-flex flex-column justify-content-center align-items-center mx-auto">
-
-    <h2>Favorites</h2>
-
-
-
-    <div class="row row-cols-1 row-cols-lg-3 g-4 row-cols-md-2 justify-content-md-center" id="favorites-movie-container">
-
-
-    </div>
-
-
   </div>
-
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
   <script src="index.js"></script>

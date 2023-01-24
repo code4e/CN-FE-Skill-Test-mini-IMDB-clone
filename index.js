@@ -1,8 +1,14 @@
 
 (function () {
 
+    //look for favorites in the local storage, if any
+    let localStorageItem = localStorage.getItem('favorites');
+    let favoritesArr = (localStorageItem ? JSON.parse(localStorageItem) : []);
     //clear input search box when page gets loaded
     document.getElementById('search-box').value = '';
+
+    //when the page first loads, reset moviePageItem from localStorage
+    localStorage.setItem("moviePageItemID", "");
 
 
     let popover = document.querySelector('.wrapper details');
@@ -11,6 +17,16 @@
 
     let API_KEY = '119d0051';
     let BASE_URI = 'http://www.omdbapi.com/';
+
+
+    //fetch favorites from the local storage and append it to DOM
+    (function () {
+        favoritesArr.forEach(movie => {
+            appendFavoriteTODOM(movie);
+        });
+    })();
+
+
 
     let fetchMovies = async (searchTerm) => {
         let URI = `${BASE_URI}?apiKey=${API_KEY}&s=${searchTerm}&page=1`;
@@ -40,6 +56,11 @@
                 );
 
                 moviesListUL.appendChild(movieHTML);
+
+                //attach "redirect to movie page" event listener to each search result movie
+                movieHTML.addEventListener('click', (e) => {
+                    if (e.target.tagName != "I") redirectToMoviePage(movie.imdbID);
+                });
             }
 
 
@@ -49,7 +70,7 @@
 
             popover.appendChild(moviesListUL);
 
-            popover.addEventListener('click', getMovieAndAddToFavs);
+            popover.addEventListener('click', handleFavoritesList);
 
         } else {
             if (popover.children.length == 2) {
@@ -60,16 +81,49 @@
 
     }
 
-    async function getMovieAndAddToFavs(e) {
+    function redirectToMoviePage(id) {
+
+        localStorage.setItem("moviePageItemID", JSON.stringify(id));
+        // now redirect to the movie page and display the movie details of the movie that was clicked
+        window.location.href = './movie.html';
+    }
+
+    //fetch movie which is to be added to favorites and add it to DOM and favorites array
+    async function handleFavoritesList(e) {
 
         if (e.target.tagName == "I") {
             let movieID = e.target.parentElement.id;
-
-
             let URI = `${BASE_URI}?apiKey=${API_KEY}&i=${movieID}`;
             fetch(URI)
                 .then(response => response.text())
-                .then(data => appendFavoriteTODOM(JSON.parse(data)));
+                .then(data => {
+
+                    let movieJSO = JSON.parse(data);
+
+                    let movie = {
+                        imdbID: movieJSO.imdbID,
+                        Poster: movieJSO.Poster,
+                        Title: movieJSO.Title,
+                        imdbRating: movieJSO.imdbRating,
+                        Plot: movieJSO.Plot
+                    };
+
+                    //check if the movie to be added already exists in favorites
+                    if (!favoritesArr.some(m => m.imdbID == movie.imdbID)) {
+                        //add favorite movie to RAM
+                        favoritesArr.push(movie);
+
+                        //add favorite movie to DOM
+                        appendFavoriteTODOM(movie);
+
+                        //save to local storage
+                        localStorage.setItem("favorites", JSON.stringify(favoritesArr));
+                    }else{
+                        alert("This movie already exists in favorites");
+                    }
+
+
+                });
         }
     }
 
@@ -87,7 +141,7 @@
           </h6>
           <p class="card-text">${movie.Plot}</p>
           </div>
-          <button type="button" class="btn btn-info">Remove from Favorites</button>
+          <button type="button" class="btn btn-info remove-from-favorites-btn">Remove from Favorites</button>
         </div>
       </div>`);
 
@@ -112,6 +166,7 @@
 
     let getResultsFromAPI = function (e) {
 
+
         let inputValue = e.target.value;
 
 
@@ -130,7 +185,11 @@
         }
     }
 
-    document.getElementById('search-box').addEventListener('keyup', getResultsFromAPI);
+    //apply throttling to the movie search event listener callback to rate limit the expensive api calling 
+    let betterAPICallmaker = throttle(getResultsFromAPI, 100);
+
+
+    document.getElementById('search-box').addEventListener('keyup', betterAPICallmaker);
 
 
     //remove popover from dom when ever the page is clicked somewhere else
@@ -144,6 +203,51 @@
         }
     });
 
+    //throttle fn to rate limit the expensive api calls by delaying the call with a certain limit
+    function throttle(fn, delay) {
+        let flag = true;
+        return function () {
+            let event = arguments[0];
+            if (flag) {
+                fn(event);
+                flag = false;
+                setTimeout(() => {
+                    flag = true;
+                }, delay);
+            }
+        }
+    }
+
+
+    favoriteMoviesContainer.addEventListener('click', function (e) {
+        //check if the target is the remove button. If yes, then remove from favorites
+        if (e.target.classList.contains("remove-from-favorites-btn")) {
+            let favMovieCard = e.target.parentElement.parentElement;
+            let favMovieID = favMovieCard.id;
+            //remove from RAM
+            let idx = favoritesArr.findIndex(movie => movie.imdbID == favMovieID);
+            if (idx == -1) return;
+            favoritesArr.splice(idx, 1);
+
+
+            //remove from DOM
+            favMovieCard.remove();
+
+
+            //remove from local storage
+            localStorage.setItem("favorites", JSON.stringify(favoritesArr));
+        }
+        //check if the movie card was clicked. If yes, then go to movie page
+        else if (e.target.id != "favorites-movie-container") {
+
+            //find the parent of the card that has the id of the movie which is to be viewed, (doesn't work on Internet explorer)
+            const r1 = e.target.closest(".favorite-movie");
+            if (r1 != null) {
+                //redirect to the clicked movie
+                redirectToMoviePage(r1.id);
+            }
+        }
+    });
 
 
 })();

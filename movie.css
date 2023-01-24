@@ -1,0 +1,34 @@
+body {
+    background-color: bisque;
+}
+
+.imdb-score {
+    height: 30px;
+    margin-left: 4px;
+}
+
+.score-container {
+    /* display: flex; */
+    width: 100%;
+}
+
+.score-container i {
+    /* align-self: center; */
+    transform: scale(1.7);
+    color: darkgoldenrod
+}
+
+.fa-film, .fa-language {
+    transform: scale(1.1);
+    /* margin-top: px; */
+    position: relative;
+    top: 2px;
+}
+
+.movie-card {
+    background: rgb(34, 193, 195);
+    background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(93, 189, 182, 1) 33%, rgba(253, 187, 45, 1) 100%);
+}
+.movie-card:hover{
+    transform: scale(1.01);
+}
