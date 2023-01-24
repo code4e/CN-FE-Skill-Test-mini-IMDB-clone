@@ -5,7 +5,9 @@
     align-items: flex-start !important;
 }
 
-
+.main-container{
+    margin-bottom: 100px;
+}
 
 /* popover */
 details[data-popover] {
@@ -63,7 +65,7 @@ details[data-popover="down"]>summary+* {
     list-style: none;
     margin: 0;
     padding: 0;
-    width: 30rem;
+    width: 22rem;
 
 }
 
