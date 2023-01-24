@@ -1,0 +1,119 @@
+#input-movie-form {
+    margin: 25px;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+}
+
+
+
+/* popover */
+details[data-popover] {
+    display: block;
+    position: relative;
+}
+
+details[data-popover]>summary:focus {
+    outline: none;
+}
+
+details[data-popover]>summary::-webkit-details-marker {
+    display: none;
+}
+
+details[data-popover]>summary {
+    list-style: none;
+    text-decoration: underline dotted teal;
+}
+
+details[data-popover]>summary+* {
+    position: absolute;
+    display: block;
+    z-index: 1;
+    width: 350%;
+    border: solid 1px teal;
+    border-radius: 5%;
+    padding: 10px;
+    background: white;
+}
+
+details[data-popover]>*+* {
+    /* hide detail elements that would ruin the popover */
+    /* display: none; */
+}
+
+details[data-popover="down"]>summary+* {
+    top: calc(0.2rem + 100%);
+    right: 50%;
+    transform: translateX(90%);
+}
+
+
+/* wrapper setup */
+.wrapper {
+    width: 90px;
+    padding: 10px;
+    margin: 0;
+    display: block;
+    position: absolute;
+    top: 4.5rem;
+}
+
+#popover-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 30rem;
+
+}
+
+#popover-list li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#popover-list li span,  #popover-list li i{
+    margin: 5px;
+}
+
+
+#popover-list li i:hover{
+    color: darksalmon;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+#popover-list li:hover{
+    background-color: aquamarine;
+}
+
+.favorite-movie{
+    /* margin: 100px; */
+}
+
+.favorite-movie:hover {
+    animation: scale 200ms ease-in-out forwards;
+    cursor: pointer;
+}
+
+@keyframes scale {
+    to {
+        transform: scale(1.01);
+    }
+}
+
+.movie-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.movie-head *{
+    margin: 5px;
+}
+
+.favorites-container{
+    height : 100%;
+}
+
