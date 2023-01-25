@@ -41,7 +41,7 @@ details[data-popover]>summary+* {
 
 details[data-popover]>*+* {
     /* hide detail elements that would ruin the popover */
-    /* display: none; */
+    display: none;
 }
 
 details[data-popover="down"]>summary+* {
@@ -91,9 +91,6 @@ details[data-popover="down"]>summary+* {
     background-color: aquamarine;
 }
 
-.favorite-movie{
-    /* margin: 100px; */
-}
 
 .favorite-movie:hover {
     animation: scale 200ms ease-in-out forwards;
