@@ -1,7 +1,7 @@
 (function () {
 
     let API_KEY = '119d0051';
-    let BASE_URI = 'http://www.omdbapi.com/';
+    let BASE_URI = 'https://www.omdbapi.com/';
     let movieID = JSON.parse(localStorage.getItem("moviePageItemID"));
     let movieContainer = document.querySelector(".movie-container");
 

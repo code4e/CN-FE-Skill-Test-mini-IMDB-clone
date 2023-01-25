@@ -16,7 +16,7 @@
 
 
     let API_KEY = '119d0051';
-    let BASE_URI = 'http://www.omdbapi.com/';
+    let BASE_URI = 'https://www.omdbapi.com/';
 
 
     //fetch favorites from the local storage and append it to DOM
