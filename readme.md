@@ -1,0 +1,1 @@
+Coding Ninjas CCP Front End Skill Test project - Mini-IMDB-Clone. This project is made completely in Vanilla JS with HTML, CSS and Bootstrap (for styling). Uses OMDB movies API to fetch the data asynchronusly for the requested movies
